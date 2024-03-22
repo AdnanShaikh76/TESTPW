@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Random URL Generator</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+  #url-container {
+    text-align: center;
+  }
+  #url {
+    margin-bottom: 20px;
+  }
+</style>
+</head>
+<body>
+
+<div id="url-container">
+  <p>Click the link below to generate a random URL.</p>
+  <p id="url"></p>
+</div>
+
+<script>
+function generateRandomURL() {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let randomURL = '';
+  for (let i = 0; i < 10; i++) {
+    randomURL += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return randomURL;
+}
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    alert("Geolocation is not supported by this browser.");
+  }
+}
+
+function showPosition(position) {
+  alert("Latitude: " + position.coords.latitude + 
+  "\nLongitude: " + position.coords.longitude);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const urlContainer = document.getElementById('url');
+  const randomURL = generateRandomURL();
+  const link = document.createElement('a');
+  link.href = `http://example.com/${randomURL}`; // Change 'example.com' to your domain
+  link.textContent = `http://example.com/${randomURL}`;
+  link.addEventListener('click', getLocation);
+  urlContainer.appendChild(link);
+});
+</script>
+
+</body>
+</html>
